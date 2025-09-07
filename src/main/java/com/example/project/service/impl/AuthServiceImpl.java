@@ -1,0 +1,112 @@
+package com.example.project.service.impl;
+
+import com.example.project.dto.IntrospectRequest;
+import com.example.project.dto.IntrospectResponse;
+import com.example.project.dto.auth.LoginRequest;
+import com.example.project.dto.auth.LoginResponse;
+import com.example.project.dto.auth.RegisterRequest;
+import com.example.project.dto.auth.RegisterResponse;
+import com.example.project.entity.Role;
+import com.example.project.entity.User;
+import com.example.project.exception.ErrorCode;
+import com.example.project.mapper.AuthMapper;
+import com.example.project.repository.RoleRepository;
+import com.example.project.repository.UserRepository;
+import com.example.project.service.itf.AuthService;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class AuthServiceImpl implements AuthService {
+    UserRepository userRepository;
+    AuthMapper authMapper;
+    PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
+
+    @NonFinal
+    protected String secretKey = "m3BcTcomcPggMpHhlng+xNpInMy+vjQsJryHzvggXfEvWbTUiltPHn8r5qtTmGj7\n";
+
+    @Override
+    public RegisterResponse register(RegisterRequest request) {
+        if(userRepository.existsByUsername(request.getUsername())){
+            throw new RuntimeException(ErrorCode.USER_ALREADY_EXISTS.getMessage());
+        }
+        User user = authMapper.toUser(request);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role studentRole = roleRepository.findByName("STUDENT")
+                .orElseThrow(() -> new RuntimeException("Default role STUDENT not found"));
+        user.setRole(studentRole);
+        userRepository.save(user);
+        return authMapper.toResponse(user);
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOTFOUND.getMessage()));
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+            throw new RuntimeException(ErrorCode.PASSWORD_INVALID.getMessage());
+        }
+        var token = generateToken(request);
+        return new LoginResponse(token);
+    }
+
+    @Override
+    public String generateToken(LoginRequest request) {
+        JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
+        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
+                .subject(request.getUsername())
+                .issuer(request.getUsername())
+                .issueTime(new Date())
+                .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .build();
+        Payload payload = new Payload(jwtClaimsSet.toJSONObject());
+        JWSObject jwsObject = new JWSObject(header, payload);
+        try {
+            jwsObject.sign(new MACSigner(secretKey.getBytes()));
+            return jwsObject.serialize();
+        } catch (JOSEException e) {
+            log.error("Cannot create JWT object", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+        var token = request.getToken();
+
+        JWSVerifier verifier = new MACVerifier(secretKey.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+        Date expirationDate = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        var verified = signedJWT.verify(verifier);
+        return IntrospectResponse.builder()
+                .valid(expirationDate.after(new Date()) && verified)
+                .build();
+    }
+
+    @Override
+    public LoginResponse refreshToken(String refreshToken) {
+        return null;
+    }
+}
