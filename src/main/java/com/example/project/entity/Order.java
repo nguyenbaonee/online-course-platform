@@ -2,10 +2,7 @@ package com.example.project.entity;
 
 import com.example.project.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,6 +20,7 @@ import static com.example.project.enums.OrderStatus.PENDING;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

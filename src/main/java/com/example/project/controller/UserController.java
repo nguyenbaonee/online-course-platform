@@ -8,6 +8,7 @@ import com.example.project.service.itf.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 
@@ -21,6 +22,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/users/{userId}")
+    @PreAuthorize("#userId == authentication.name or hasRole(ADMIN)")
     public ApiResponse<UserResponse> getUser(@PathVariable String userId) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getUser(userId))

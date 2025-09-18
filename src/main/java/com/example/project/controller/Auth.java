@@ -26,7 +26,7 @@ import java.text.ParseException;
 public class Auth {
     AuthService authService;
 
-    @PostMapping("/auth")
+    @PostMapping("/register")
     public ApiResponse<RegisterResponse> register(@RequestBody RegisterRequest request) {
         return ApiResponse.<RegisterResponse>builder()
                 .result(authService.register(request))

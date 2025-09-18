@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "users")
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

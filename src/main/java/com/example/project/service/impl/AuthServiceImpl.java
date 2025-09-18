@@ -23,13 +23,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Slf4j
 @Service
@@ -42,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
     RoleRepository roleRepository;
 
     @NonFinal
-    protected String secretKey = "m3BcTcomcPggMpHhlng+xNpInMy+vjQsJryHzvggXfEvWbTUiltPHn8r5qtTmGj7\n";
+    @Value("${app.jwt.secret}") protected String secretKey;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -71,12 +75,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String generateToken(LoginRequest request) {
+        var user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException(ErrorCode.USER_NOTFOUND.getMessage()));
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(request.getUsername())
                 .issuer(request.getUsername())
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .claim("scope",buildScope(user))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -87,6 +94,14 @@ public class AuthServiceImpl implements AuthService {
             log.error("Cannot create JWT object", e);
             throw new RuntimeException(e);
         }
+    }
+
+    private String buildScope(User user) {
+        StringJoiner scopeJoiner = new StringJoiner(" ");
+        if (user.getRole() != null) {
+            scopeJoiner.add(user.getRole().getName());
+        }
+        return scopeJoiner.toString();
     }
 
     @Override
