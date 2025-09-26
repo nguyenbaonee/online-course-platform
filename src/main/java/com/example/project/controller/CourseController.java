@@ -1,10 +1,10 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.course.CourseRequest;
-import com.example.project.dto.course.CourseResponseBase;
-import com.example.project.dto.course.CourseResponsePrivate;
-import com.example.project.dto.course.CourseResponsePublic;
+import com.example.project.dto.request.CourseRequest;
+import com.example.project.dto.response.CourseResponseBase;
+import com.example.project.dto.response.CourseResponsePrivate;
+import com.example.project.dto.response.CourseResponsePublic;
 import com.example.project.service.itf.CourseService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

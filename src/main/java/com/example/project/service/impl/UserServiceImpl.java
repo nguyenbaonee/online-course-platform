@@ -1,8 +1,8 @@
 package com.example.project.service.impl;
 
-import com.example.project.dto.role.ChangeRole;
-import com.example.project.dto.usreDto.UserRequest;
-import com.example.project.dto.usreDto.UserResponse;
+import com.example.project.dto.request.ChangeRole;
+import com.example.project.dto.request.UserRequest;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.entity.Role;
 import com.example.project.exception.ErrorCode;
 import com.example.project.mapper.UserMapper;

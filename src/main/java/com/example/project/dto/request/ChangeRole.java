@@ -1,4 +1,4 @@
-package com.example.project.dto.role;
+package com.example.project.dto.request;
 
 import lombok.*;
 

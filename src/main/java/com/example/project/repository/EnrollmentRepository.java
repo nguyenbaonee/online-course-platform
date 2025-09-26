@@ -1,9 +1,7 @@
 package com.example.project.repository;
 
-import com.example.project.dto.course.CourseResponsePrivate;
 import com.example.project.entity.Course;
 import com.example.project.entity.Enrollment;
-import org.hibernate.annotations.Parameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

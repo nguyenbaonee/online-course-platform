@@ -1,6 +1,6 @@
-package com.example.project.dto.auth;
+package com.example.project.dto.response;
 
-import com.example.project.entity.Role;
+import com.example.project.entity.RefreshToken;
 import lombok.*;
 
 @Getter
@@ -10,4 +10,5 @@ import lombok.*;
 @NoArgsConstructor
 public class LoginResponse {
     String token;
+    String refreshToken;
 }

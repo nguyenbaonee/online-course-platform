@@ -1,7 +1,7 @@
 package com.example.project.service.impl;
 
-import com.example.project.dto.order.OrderRequest;
-import com.example.project.dto.order.OrderResponse;
+import com.example.project.dto.request.OrderRequest;
+import com.example.project.dto.response.OrderResponse;
 import com.example.project.entity.Course;
 import com.example.project.entity.Order;
 import com.example.project.entity.OrderItem;

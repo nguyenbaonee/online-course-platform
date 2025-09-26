@@ -1,6 +1,5 @@
-package com.example.project.dto.order;
+package com.example.project.dto.response;
 
-import com.example.project.entity.OrderItem;
 import lombok.*;
 
 import java.math.BigDecimal;

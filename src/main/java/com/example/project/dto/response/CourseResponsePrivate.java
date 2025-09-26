@@ -1,4 +1,4 @@
-package com.example.project.dto.course;
+package com.example.project.dto.response;
 
 import lombok.*;
 
@@ -6,10 +6,11 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseRequest {
+@Builder
+public class CourseResponsePrivate implements CourseResponseBase {
+    String id;
     String title;
     String description;
     private BigDecimal price;

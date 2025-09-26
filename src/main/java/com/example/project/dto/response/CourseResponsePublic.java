@@ -1,6 +1,5 @@
-package com.example.project.dto.course;
+package com.example.project.dto.response;
 
-import com.example.project.service.itf.CourseService;
 import lombok.*;
 
 import java.math.BigDecimal;

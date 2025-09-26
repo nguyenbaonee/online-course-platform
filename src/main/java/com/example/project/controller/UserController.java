@@ -1,16 +1,15 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.role.ChangeRole;
-import com.example.project.dto.usreDto.UserRequest;
-import com.example.project.dto.usreDto.UserResponse;
+import com.example.project.dto.request.ChangeRole;
+import com.example.project.dto.request.UserRequest;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.service.itf.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
 
 import java.util.List;
 

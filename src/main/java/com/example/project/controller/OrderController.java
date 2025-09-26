@@ -1,8 +1,8 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.order.OrderRequest;
-import com.example.project.dto.order.OrderResponse;
+import com.example.project.dto.request.OrderRequest;
+import com.example.project.dto.response.OrderResponse;
 import com.example.project.service.itf.OrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

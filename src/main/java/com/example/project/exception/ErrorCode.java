@@ -8,7 +8,8 @@ public enum ErrorCode {
     ROLE_NOTFOUND(2001, "ROLE NOT FOUND"),
     COURSE_NOTFOUND(3001,"COURSE_NOTFOUND"),
     TITLE_EXISTS(4001,"Title already exists"),
-    ORDER_NOTFOUND(4001,"ORDER_NOTFOUND");
+    ORDER_NOTFOUND(4002,"ORDER_NOTFOUND"),
+    UNAUTHENTICATED(4003, "UNAUTHENTICATED");
     private final int code;
     private final String message;
     ErrorCode(int code, String message) {

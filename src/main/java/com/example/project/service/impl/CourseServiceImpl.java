@@ -1,9 +1,9 @@
 package com.example.project.service.impl;
 
-import com.example.project.dto.course.CourseRequest;
-import com.example.project.dto.course.CourseResponseBase;
-import com.example.project.dto.course.CourseResponsePrivate;
-import com.example.project.dto.course.CourseResponsePublic;
+import com.example.project.dto.request.CourseRequest;
+import com.example.project.dto.response.CourseResponseBase;
+import com.example.project.dto.response.CourseResponsePrivate;
+import com.example.project.dto.response.CourseResponsePublic;
 import com.example.project.entity.Course;
 import com.example.project.exception.ErrorCode;
 import com.example.project.mapper.CourseMapper;

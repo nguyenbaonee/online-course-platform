@@ -1,6 +1,6 @@
 package com.example.project.mapper;
 
-import com.example.project.dto.enrollment.EnrollmentRespose;
+import com.example.project.dto.response.EnrollmentRespose;
 import com.example.project.entity.Enrollment;
 import org.mapstruct.Mapper;
 

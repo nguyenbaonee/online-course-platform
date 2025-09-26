@@ -1,7 +1,7 @@
 package com.example.project.mapper;
 
-import com.example.project.dto.auth.RegisterRequest;
-import com.example.project.dto.auth.RegisterResponse;
+import com.example.project.dto.request.RegisterRequest;
+import com.example.project.dto.response.RegisterResponse;
 import com.example.project.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

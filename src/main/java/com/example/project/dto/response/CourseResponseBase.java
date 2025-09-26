@@ -1,4 +1,4 @@
-package com.example.project.dto.course;
+package com.example.project.dto.response;
 
 import java.math.BigDecimal;
 

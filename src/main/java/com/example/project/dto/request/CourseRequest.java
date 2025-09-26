@@ -1,18 +1,15 @@
-package com.example.project.dto.course;
+package com.example.project.dto.request;
 
-import com.example.project.entity.Enrollment;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class CourseResponsePrivate implements CourseResponseBase {
-    String id;
+public class CourseRequest {
     String title;
     String description;
     private BigDecimal price;

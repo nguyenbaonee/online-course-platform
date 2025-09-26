@@ -1,5 +1,9 @@
 package com.example.project.configuration;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +30,11 @@ import java.security.NoSuchAlgorithmException;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class SecurityConfig {
 
-    @Value("${app.jwt.secret}")
-    private String secret;
+    CustomJwtDecoder customJwtDecoder;
 
     @Bean
     @Order(1)
@@ -60,7 +65,7 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwt ->
-                                jwt.decoder(jwtDecoder())
+                                jwt.decoder(customJwtDecoder)
                                         .jwtAuthenticationConverter(jwtConverter())
                         )
                 );
@@ -76,14 +81,14 @@ public class SecurityConfig {
             return converter;
     }
 
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        SecretKey secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA512");
-        return NimbusJwtDecoder
-                .withSecretKey(secretKey)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
-    }
+//    @Bean
+//    public JwtDecoder jwtDecoder() {
+//        SecretKey secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA512");
+//        return NimbusJwtDecoder
+//                .withSecretKey(secretKey)
+//                .macAlgorithm(MacAlgorithm.HS512)
+//                .build();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

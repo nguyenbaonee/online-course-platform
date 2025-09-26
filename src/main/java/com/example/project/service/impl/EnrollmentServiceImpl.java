@@ -1,6 +1,6 @@
 package com.example.project.service.impl;
 
-import com.example.project.dto.enrollment.EnrollmentRespose;
+import com.example.project.dto.response.EnrollmentRespose;
 import com.example.project.entity.Course;
 import com.example.project.entity.Enrollment;
 import com.example.project.entity.User;

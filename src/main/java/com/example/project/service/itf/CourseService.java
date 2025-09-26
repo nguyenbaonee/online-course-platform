@@ -1,9 +1,9 @@
 package com.example.project.service.itf;
 
-import com.example.project.dto.course.CourseRequest;
-import com.example.project.dto.course.CourseResponseBase;
-import com.example.project.dto.course.CourseResponsePrivate;
-import com.example.project.dto.course.CourseResponsePublic;
+import com.example.project.dto.request.CourseRequest;
+import com.example.project.dto.response.CourseResponseBase;
+import com.example.project.dto.response.CourseResponsePrivate;
+import com.example.project.dto.response.CourseResponsePublic;
 
 import java.util.List;
 

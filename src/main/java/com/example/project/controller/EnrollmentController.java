@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.enrollment.EnrollmentRespose;
+import com.example.project.dto.response.EnrollmentRespose;
 import com.example.project.entity.Course;
 import com.example.project.service.itf.EnrollmentService;
 import lombok.AccessLevel;

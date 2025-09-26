@@ -1,4 +1,4 @@
-package com.example.project.dto.usreDto;
+package com.example.project.dto.request;
 
 import com.example.project.entity.Role;
 import jakarta.validation.constraints.Email;

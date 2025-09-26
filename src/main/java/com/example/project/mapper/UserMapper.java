@@ -1,7 +1,7 @@
 package com.example.project.mapper;
 
-import com.example.project.dto.usreDto.UserRequest;
-import com.example.project.dto.usreDto.UserResponse;
+import com.example.project.dto.request.UserRequest;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.entity.User;
 import org.mapstruct.*;
 
